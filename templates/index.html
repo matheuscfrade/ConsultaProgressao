@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consulta de progressão</title>
+  <style>
+    :root {
+      --ink: #1c1915;
+      --muted: #5c564c;
+      --paper: #f6f1e7;
+      --card: #fffdf8;
+      --line: #e2d8c8;
+      --green: #1f4d3a;
+      --rust: #8c3a24;
+      --rust-bg: #f8ebe4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.45 "Segoe UI", sans-serif;
+    }
+    main { max-width: 920px; margin: 0 auto; padding: 32px 20px 64px; }
+    h1 { font-family: Palatino, "Palatino Linotype", serif; font-size: 2.2rem; line-height: 1.1; margin: 0 0 8px; }
+    h2 { margin: 0 0 12px; font-size: 1.25rem; }
+    p { margin: 0 0 12px; }
+    .kicker { letter-spacing: 0.04em; text-transform: uppercase; color: var(--green); font-size: 0.78rem; font-weight: 700; }
+    .intro { color: var(--muted); max-width: 38rem; }
+    form, .erro, .aviso, .vazio, .card, .secao {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    form { display: grid; gap: 14px; padding: 18px; margin: 22px 0; }
+    label { display: grid; gap: 6px; font-weight: 650; }
+    input, button { font: inherit; }
+    input[type="number"], input[type="file"], select {
+      font-weight: 400;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+    .datas { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    button, .download {
+      border: 0;
+      border-radius: 999px;
+      background: var(--green);
+      color: white;
+      padding: 10px 18px;
+      text-decoration: none;
+      width: fit-content;
+      cursor: pointer;
+    }
+    .erro { padding: 12px 16px; border-color: var(--rust); color: var(--rust); }
+    .aviso { padding: 12px 16px; margin-bottom: 12px; }
+    .resumo { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0; }
+    .resumo span { background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
+    .secao { padding: 16px; margin: 16px 0; }
+    .secao.atraso { background: var(--rust-bg); border-color: #e3c2b6; }
+    .secao.atraso h2 { color: var(--rust); }
+    .card { padding: 14px 16px; margin-top: 10px; }
+    .card h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .marca { display: inline-block; margin-bottom: 8px; color: var(--rust); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+    dl { display: grid; grid-template-columns: minmax(11rem, max-content) 1fr; gap: 4px 12px; margin: 0; }
+    dt { color: var(--muted); }
+    dd { margin: 0; }
+    dd.linhas { white-space: pre-line; }
+    .alerta { position: relative; display: inline-flex; margin-left: 4px; vertical-align: middle; }
+    .alerta button {
+      width: 0.85rem; height: 0.85rem; padding: 0; border-radius: 999px;
+      border: 1px solid var(--muted); background: transparent; color: var(--muted);
+      font: italic 600 0.62rem/0.85rem Georgia, "Palatino Linotype", serif; cursor: help;
+    }
+    .alerta .nota {
+      display: none; position: absolute; z-index: 2; left: 0; top: 1.4rem;
+      width: min(22rem, 70vw); margin: 0; padding: 8px 10px;
+      border: 1px solid #e3c2b6; border-radius: 8px; background: #fffdf8;
+      color: var(--ink); font-size: 0.85rem; font-weight: 400; line-height: 1.35;
+      box-shadow: 0 8px 24px rgba(28, 25, 21, 0.12);
+    }
+    .alerta:hover .nota, .alerta:focus-within .nota { display: block; }
+    dd.linhas { white-space: pre-line; }
+    .vazio { padding: 16px; }
+    @media (max-width: 640px) {
+      .datas, dl { grid-template-columns: 1fr; }
+      main { padding: 20px 14px 48px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Consulta de progressão</h1>
+    <p class="intro">Envie o relatório de servidores do campus que quer calcular e os afastamentos, mesmo que eles tragam todos os campi. O cruzamento é pela matrícula.</p>
+    <p class="intro"><a href="/local/">Versão no navegador</a>, sem enviar as planilhas.</p>
+
+    {% if erro %}
+      <p class="erro">{{ erro }}</p>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+      <div class="datas">
+        <label>Mês <input type="number" name="mes" min="1" max="12" value="{{ mes }}" required></label>
+        <label>Ano <input type="number" name="ano" min="1990" max="2100" value="{{ ano }}" required></label>
+      </div>
+      <label>Servidores, CSV ou XLSX <input type="file" name="servidores" accept=".csv,.xlsx" required></label>
+      <label>Afastamentos, CSV ou XLSX <input type="file" name="afastamentos" accept=".csv,.xlsx" required></label>
+      <button type="submit">Gerar relatório</button>
+    </form>
+
+    {% if registros is not none %}
+      {% for aviso in avisos %}
+        <p class="aviso">{{ aviso }}</p>
+      {% endfor %}
+
+      <div class="resumo">
+        <span>No mês: {{ no_mes|length }}</span>
+        <span>Não calculado: {{ nao_calculado|length }}</span>
+      </div>
+      <a class="download" href="/excel/{{ token }}">Baixar Excel</a>
+
+      {% if not no_mes %}
+        <p class="vazio">Nenhuma progressão neste mês.</p>
+      {% endif %}
+
+      {% if no_mes %}
+        <section class="secao">
+          <h2>No mês</h2>
+          {% for item in no_mes %}{% include "card.html" %}{% endfor %}
+        </section>
+      {% endif %}
+
+      {% if nao_calculado %}
+        <section class="secao">
+          <h2>Não calculado</h2>
+          {% for item in nao_calculado %}{% include "card.html" %}{% endfor %}
+        </section>
+      {% endif %}
+    {% endif %}
+  </main>
+</body>
+</html>

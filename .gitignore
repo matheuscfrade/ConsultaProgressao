@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+.env.*
+
+# Planilhas e exports com dado de pessoa. Não vão para o GitHub.
+*.xlsx
+*.xls
+*.csv
+*.ipynb

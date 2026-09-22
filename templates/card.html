@@ -1,0 +1,23 @@
+<article class="card">
+  <h3>{{ item.servidor }}</h3>
+  <dl>
+    <dt>SIAPE</dt><dd>{{ item.siape }}</dd>
+    <dt>Situação</dt><dd>{{ item.situacao or "—" }}</dd>
+    <dt>Cargo</dt><dd>{{ item.cargo }}</dd>
+    <dt>Interstício</dt><dd>{{ item.intersticio or "—" }}</dd>
+    <dt>Carreira</dt><dd>{{ item.carreira }}</dd>
+    <dt>Efeitos financeiros</dt><dd>{{ item.efeitos_financeiros or "—" }}{% if item.data_efeito %} ({{ item.data_efeito }}){% endif %}</dd>
+    <dt>Observação</dt><dd>{{ item.observacao }}</dd>
+    <dt>Setor</dt><dd>{{ item.setor }}</dd>
+    <dt>Chefe do Setor <span class="alerta"><button type="button" aria-label="Sobre Chefe do Setor">i</button><span class="nota" role="tooltip">Quem ocupa chefia no mesmo setor do servidor. Não é, necessariamente, a chefia imediata. Se a hierarquia sobe para outro setor, o chefe imediato pode estar lá. Por exemplo, o chefe imediato de um chefe de setor pode ser o diretor, vinculado à diretoria.</span></span></dt>
+    <dd>{{ item.chefias }}</dd>
+    <dt>Servidores do mesmo Setor <span class="alerta"><button type="button" aria-label="Sobre Servidores do mesmo Setor">i</button><span class="nota" role="tooltip">Demais servidores vinculados ao mesmo setor. Não são, necessariamente, os pares hierárquicos.</span></span></dt>
+    <dd>{{ item.pares }}</dd>
+    <dt>Exerce CD? <span class="alerta"><button type="button" aria-label="Sobre Exerce CD">i</button><span class="nota" role="tooltip">Indica só se a pessoa ocupa cargo de direção na data deste arquivo. Não informa se exerceu cargo de direção durante o interstício.</span></span></dt>
+    <dd>{{ item.funcao_cd }}</dd>
+    <dt>Senha</dt><dd>{{ item.senha }}</dd>
+    <dt>Afastamentos (período)</dt><dd class="linhas">{{ item.afastamentos_periodo }}</dd>
+    <dt>Outros afastamentos</dt><dd class="linhas">{{ item.outros_afastamentos }}</dd>
+    {% if item.motivo %}<dt>Motivo</dt><dd>{{ item.motivo }}</dd>{% endif %}
+  </dl>
+</article>

@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pandas
+python-dateutil
+openpyxl
+python-multipart
+pytest
+httpx
