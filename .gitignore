@@ -11,3 +11,7 @@ venv/
 *.xls
 *.csv
 *.ipynb
+
+# Rascunho antigo do Colab. O notebook tem resultado com nome e matrícula.
+analise_pessoas_cfo_v2.py
+analise_pessoas_CFO_v2.ipynb

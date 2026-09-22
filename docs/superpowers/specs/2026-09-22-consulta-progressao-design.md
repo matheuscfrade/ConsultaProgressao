@@ -4,7 +4,7 @@ Data: 2026-09-22
 
 Aplicativo local, aberto no navegador, que substitui o notebook Colab `analise_pessoas_cfo_v2` para o uso do dia a dia. Cada uso é um campus: um relatório de servidores exportado do SUAP e o arquivo de afastamentos desse mesmo campus. O resultado é a lista de quem está no prazo no mês escolhido e de quem já passou do prazo, com o próximo nível da carreira e um Excel.
 
-O notebook e o `analise_pessoas_cfo_v2.py` permanecem no repositório como referência. O que se roda é o aplicativo novo.
+O que se roda é o aplicativo novo. O rascunho antigo do Colab não entra no repositório.
 
 ## Fora deste desenho
 
