@@ -2,7 +2,9 @@
 
 Relatório de progressão por campus. Cada uso recebe um arquivo de servidores do SUAP e os afastamentos. Os afastamentos podem trazer todos os campi. O cruzamento é pela matrícula.
 
-A página publicada calcula no navegador. As planilhas não são enviadas para nenhum servidor externo.
+A página publicada calcula no navegador: https://matheuscfrade.github.io/ConsultaProgressao/
+
+As planilhas não são enviadas para nenhum servidor externo.
 
 ## Neste computador
 
