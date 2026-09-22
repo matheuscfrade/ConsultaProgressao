@@ -38,6 +38,7 @@
       padding: 10px 18px; text-decoration: none; width: fit-content; cursor: pointer;
     }
     button:disabled { opacity: 0.55; cursor: wait; }
+    .dica { margin: -6px 0 0; color: var(--muted); font-size: 0.85rem; font-weight: 400; }
     .erro { padding: 12px 16px; border-color: var(--rust); color: var(--rust); }
     .aviso, .status { padding: 12px 16px; margin-bottom: 12px; }
     .resumo { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0; }
@@ -83,7 +84,9 @@
         <label>Ano <input type="number" name="ano" min="1990" max="2100" required></label>
       </div>
       <label>Servidores, CSV ou XLSX <input type="file" name="servidores" accept=".csv,.xlsx" required></label>
+      <p class="dica">Extraído pelas áreas de gestão de pessoas dos campi do IFMG em <a href="https://suap.ifmg.edu.br/">suap.ifmg.edu.br</a>, em Gestão de Pessoas, Relatórios, Buscar Servidores. No filtro, use Escopo da Pesquisa: qualquer servidor; Campus Exercício SIAPE: só o seu campus; Opções de Visualização: Marcar Todos.</p>
       <label>Afastamentos, CSV ou XLSX <input type="file" name="afastamentos" accept=".csv,.xlsx" required></label>
+      <p class="dica">Extraído do DW SIAPE no dia 1º de cada mês. A pasta é compartilhada só com as áreas de gestão de pessoas dos campi do IFMG: <a href="https://drive.google.com/drive/folders/1tvBAQTSm6fVmi7CiaLK-v6ooFnaq7jc_?usp=drive_link">pasta de afastamentos</a>.</p>
       <button type="submit" id="gerar" disabled>Gerar relatório</button>
     </form>
     <div id="resultado"></div>
